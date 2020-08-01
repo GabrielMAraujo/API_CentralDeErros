@@ -8,7 +8,20 @@
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'API_CentralDeErros' ">
     <StartAction>Project</StartAction>
+    <ExternalConsole>true</ExternalConsole>
     <LaunchUrl>weatherforecast</LaunchUrl>
     <ApplicationURL>https://localhost:5001;http://localhost:5000</ApplicationURL>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\API_CentralDeErros.Model\API_CentralDeErros.Model.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+    <ProjectReference Include="..\API_CentralDeErros.Service\API_CentralDeErros.Service.csproj">
+      <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
+    </ProjectReference>
+  </ItemGroup>
 </Project>
