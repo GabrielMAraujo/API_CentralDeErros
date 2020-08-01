@@ -1,13 +1,16 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_CentralDeErros.Model", "API_CentralDeErros.Model\API_CentralDeErros.Model.csproj", "{6F848360-15FB-47CE-B181-4D676645A6D8}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30320.27
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_CentralDeErros.Model", "API_CentralDeErros.Model\API_CentralDeErros.Model.csproj", "{6F848360-15FB-47CE-B181-4D676645A6D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_CentralDeErros.Service", "API_CentralDeErros.Service\API_CentralDeErros.Service.csproj", "{900A6829-01C7-427B-A4B4-D5351440182B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_CentralDeErros.Service", "API_CentralDeErros.Service\API_CentralDeErros.Service.csproj", "{900A6829-01C7-427B-A4B4-D5351440182B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_CentralDeErros.Test", "API_CentralDeErros.Test\API_CentralDeErros.Test.csproj", "{EAD33856-4670-4067-964A-1BB3A0B48F0F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_CentralDeErros.Test", "API_CentralDeErros.Test\API_CentralDeErros.Test.csproj", "{EAD33856-4670-4067-964A-1BB3A0B48F0F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_CentralDeErros.API", "API_CentralDeErros.API\API_CentralDeErros.API.csproj", "{A9F785EB-CF56-468F-8B5E-FFF0C9224DE2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "API_CentralDeErros.API", "API_CentralDeErros.API\API_CentralDeErros.API.csproj", "{A9F785EB-CF56-468F-8B5E-FFF0C9224DE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API_CentralDeErros.Infra", "API_CentralDeErros.Infra\API_CentralDeErros.Infra.csproj", "{E824959F-AF8E-40B4-A886-287D85E65743}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,5 +34,15 @@ Global
 		{A9F785EB-CF56-468F-8B5E-FFF0C9224DE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9F785EB-CF56-468F-8B5E-FFF0C9224DE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9F785EB-CF56-468F-8B5E-FFF0C9224DE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E824959F-AF8E-40B4-A886-287D85E65743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E824959F-AF8E-40B4-A886-287D85E65743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E824959F-AF8E-40B4-A886-287D85E65743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E824959F-AF8E-40B4-A886-287D85E65743}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3D493582-06B5-4086-89AE-261D5C979D9A}
 	EndGlobalSection
 EndGlobal
