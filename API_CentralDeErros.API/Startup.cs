@@ -11,7 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace API_CentralDeErros
+namespace API_CentralDeErros.API
 {
     public class Startup
     {
