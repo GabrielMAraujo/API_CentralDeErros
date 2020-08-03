@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API_CentralDeErros.Infra;
+using API_CentralDeErros.Model.Mapper;
+using API_CentralDeErros.Service;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +30,12 @@ namespace API_CentralDeErros.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddDbContext<CentralContext>();
+
+            services.AddAutoMapper(typeof(AutoMapperConfig));
+
+            services.AddScoped<IAlertService, AlertService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
