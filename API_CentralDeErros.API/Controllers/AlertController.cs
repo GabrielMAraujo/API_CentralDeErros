@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using API_CentralDeErros.Model.DTOs;
-using AutoMapper;
 
 namespace API_CentralDeErros.API.Controllers
 {
@@ -11,18 +10,16 @@ namespace API_CentralDeErros.API.Controllers
     public class AlertController : ControllerBase
     {
         private readonly IAlertService _service;
-        private readonly IMapper _mapper;
 
-        public AlertController(IAlertService service, IMapper mapper)
+        public AlertController(IAlertService service)
         {
             _service = service;
-            _mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<IList<AlertDTO>> GetAll()
+        public ActionResult GetAll()
         {
-            return Ok(_mapper.Map<IList<AlertDTO>>(_service.GetAll()));
+            return Ok(_service.GetAll());
         }
     }
 }
