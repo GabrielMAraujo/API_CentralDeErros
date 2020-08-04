@@ -6,6 +6,13 @@ namespace API_CentralDeErros.Model
 {
     public class User
     {
+        public User(string email, string userName, string password)
+        {
+            Email = email;
+            UserName = userName;
+            Password = password;
+        }
+
         [Required]
         public int Id { get; set; }
         [Required, MaxLength(30)]
@@ -14,7 +21,7 @@ namespace API_CentralDeErros.Model
         public string UserName { get; set; }
         [Required, MaxLength(50)]
         public string Password { get; set; }
-        [Required, MaxLength(50)]
+        [MaxLength(50)]
         public string Token { get; set; }
 
         public List<Alert> Alerts { get; set; }

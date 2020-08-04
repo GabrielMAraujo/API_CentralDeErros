@@ -9,4 +9,7 @@
     <ProjectReference Include="..\API_CentralDeErros.Infra\API_CentralDeErros.Infra.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Interfaces\" />
+  </ItemGroup>
 </Project>

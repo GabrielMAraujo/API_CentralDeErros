@@ -7,7 +7,8 @@ namespace API_CentralDeErros.Service
 {
     public class AlertService : IAlertService
     {
-        private CentralContext _context;
+        private readonly CentralContext _context;
+
         public AlertService(CentralContext context)
         {
             _context = context;
