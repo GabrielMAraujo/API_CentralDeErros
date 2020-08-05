@@ -26,12 +26,13 @@ namespace API_CentralDeErros.Service
                 .Where(item => item.Type.ToUpper() == environment)
                 .ToList();
 
-            for (int i = alerts.Count - 1; i >= 0; i--)
-            {
-                var value = alerts[i].GetType().GetProperty(searchBy).GetValue(alerts[i], null);
-                if (value.ToString().Contains(text) == false)
-                    alerts.RemoveAt(i);
-            }
+            if(searchBy!=null)
+                for (int i = alerts.Count - 1; i >= 0; i--)
+                {
+                    var value = alerts[i].GetType().GetProperty(searchBy).GetValue(alerts[i], null);
+                    if (value.ToString().Contains(text) == false)
+                        alerts.RemoveAt(i);
+                }
 
             return _mapper.Map<IList<AlertDTO>>(alerts);
         }
