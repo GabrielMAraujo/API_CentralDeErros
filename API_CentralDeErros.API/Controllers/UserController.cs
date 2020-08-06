@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using API_CentralDeErros.Model;
-using API_CentralDeErros.Model.Models;
+using API_CentralDeErros.Model.Models.JSON;
 using API_CentralDeErros.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,16 +19,17 @@ namespace API_CentralDeErros.API.Controllers
         }
 
         [HttpPost("login")]
-        public ActionResult<string> Login(string userName, string password)
+        public ActionResult<string> Login([FromBody] UserLoginJSON user)
         {
-            Console.WriteLine("asdasdsad");
-
-            User user = _service.GetUser(userName, password);
+            User foundUser = _service.GetUser(user.Email, user.Password);
 
             //Se houver login no DB, retornar OK. Se não, retornar não autorizado
-            if (user != null)
+            if (foundUser != null)
             {
-                return Ok(user.Token);
+                //return Ok(foundUser.Token);
+
+                //Provisório
+                return Ok(foundUser.UserName);
             }
             else
             {
@@ -37,13 +38,14 @@ namespace API_CentralDeErros.API.Controllers
         }
 
         [HttpPost("register")]
-        public ActionResult<User> Register([FromBody] UserJSON user)
+        public ActionResult<User> Register([FromBody] UserRegisterJSON user)
         {
             User newUser = _service.AddUser(user.Email, user.UserName, user.Password);
 
             //Se foi possível inserir, retorna OK. 
             if (newUser != null)
             {
+                //Provisório
                 return newUser;
             }
             else

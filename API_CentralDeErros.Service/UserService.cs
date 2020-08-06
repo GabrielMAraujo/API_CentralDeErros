@@ -15,9 +15,11 @@ namespace API_CentralDeErros.Service
             _context = context;
         }
 
-        public User GetUser(string userName, string password)
+        public User GetUser(string email, string password)
         {
-            return _context.Users.First(u => u.UserName == userName && u.Password == password);
+            Console.WriteLine(_context.Users.ToList().Count);
+
+            return _context.Users.FirstOrDefault(u => u.Email == email && u.Password == password);
         }
 
         public User AddUser(string email, string userName, string password)
