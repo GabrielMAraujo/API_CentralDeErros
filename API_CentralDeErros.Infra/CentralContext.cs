@@ -23,7 +23,8 @@ namespace API_CentralDeErros.Infra
             optionsBuilder.UseSqlServer($"Server={Configuration["env:DB_SERVER_ADDRESS"]};" +
                 $"Database={Configuration["env:DB_SERVER_DATABASE_NAME"]};" +
                 $"User Id={Configuration["env:DB_USER_ID"]};" +
-                $"Password={Configuration["env:DB_PASSWORD"]};");
+                $"Password={Configuration["env:DB_PASSWORD"]};",
+                b => b.MigrationsAssembly("API_CentralDeErros"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

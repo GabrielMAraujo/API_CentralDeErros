@@ -31,13 +31,15 @@ namespace API_CentralDeErros.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
+            services.AddMvc();
             services.AddDbContext<CentralContext>();
 
             services.AddAutoMapper(typeof(AutoMapperConfig));
 
             services.AddScoped<IAlertService, AlertService>();
             services.AddScoped<IUserService, UserService>();
+
+            services.AddHttpClient();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

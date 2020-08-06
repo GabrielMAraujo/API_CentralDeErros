@@ -25,7 +25,11 @@ namespace API_CentralDeErros.Service
             //Criando usuário a ser inserido
             User user = new User(email, userName, password);
 
-            return _context.Add(user).Entity;
+            var ret = _context.Add(user).Entity;
+
+            _context.SaveChanges();
+
+            return ret;
         }
     }
 }

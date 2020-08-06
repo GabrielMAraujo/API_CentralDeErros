@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using API_CentralDeErros.Model;
+using API_CentralDeErros.Model.Models;
 using API_CentralDeErros.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API_CentralDeErros.API.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    [Route("api/[controller]")]
+    public class UserController : Controller
     {
         private readonly IUserService _service;
 
@@ -16,9 +18,11 @@ namespace API_CentralDeErros.API.Controllers
             _service = service;
         }
 
-        [HttpPost("/login")]
+        [HttpPost("login")]
         public ActionResult<string> Login(string userName, string password)
         {
+            Console.WriteLine("asdasdsad");
+
             User user = _service.GetUser(userName, password);
 
             //Se houver login no DB, retornar OK. Se não, retornar não autorizado
@@ -32,15 +36,15 @@ namespace API_CentralDeErros.API.Controllers
             }
         }
 
-        [HttpPost("/register")]
-        public ActionResult<User> Register(string email, string userName, string password)
+        [HttpPost("register")]
+        public ActionResult<User> Register([FromBody] UserJSON user)
         {
-            User user = _service.AddUser(email, userName, password);
+            User newUser = _service.AddUser(user.Email, user.UserName, user.Password);
 
             //Se foi possível inserir, retorna OK. 
-            if (user != null)
+            if (newUser != null)
             {
-                return user;
+                return newUser;
             }
             else
             {
