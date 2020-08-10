@@ -1,11 +1,13 @@
 ﻿using System;
 using API_CentralDeErros.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
+
 namespace API_CentralDeErros.Infra
 {
-    public class CentralContext : DbContext
+    public class CentralContext : IdentityDbContext
     {
         public DbSet<Alert> Alerts { get; set; }
         public DbSet<User> Users { get; set; }
@@ -29,6 +31,7 @@ namespace API_CentralDeErros.Infra
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

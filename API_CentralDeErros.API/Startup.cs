@@ -1,20 +1,26 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using API_CentralDeErros.Infra;
 using API_CentralDeErros.Model.Mapper;
+using API_CentralDeErros.Model.Models;
 using API_CentralDeErros.Service;
 using API_CentralDeErros.Service.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API_CentralDeErros.API
 {
@@ -40,6 +46,44 @@ namespace API_CentralDeErros.API
             services.AddScoped<IUserService, UserService>();
 
             services.AddHttpClient();
+
+
+            //Identity
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<CentralContext>();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.User.RequireUniqueEmail = true;
+
+                options.Password.RequireUppercase = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            });
+
+            //Token
+            var section = Configuration.GetSection("Token");
+            services.Configure<Token>(section);
+
+            var token = section.Get<Token>();
+            var key = Encoding.ASCII.GetBytes(token.Secret);
+
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x => {
+                x.RequireHttpsMetadata = true;
+                x.SaveToken = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = token.Address,
+                    ValidIssuer = token.Emitter
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +97,8 @@ namespace API_CentralDeErros.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

@@ -1,18 +1,29 @@
 ﻿using System;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using API_CentralDeErros.Infra;
 using API_CentralDeErros.Model;
+using API_CentralDeErros.Model.Models;
 using API_CentralDeErros.Service.Interfaces;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace API_CentralDeErros.Service
 {
     public class UserService : IUserService
     {
         private readonly CentralContext _context;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly Token _token;
 
-        public UserService(CentralContext context)
+        public UserService(CentralContext context, UserManager<IdentityUser> userManager, IOptions<Token> token)
         {
             _context = context;
+            _userManager = userManager;
+            _token = token?.Value;
         }
 
         public User GetUser(string email, string password)
@@ -32,6 +43,57 @@ namespace API_CentralDeErros.Service
             _context.SaveChanges();
 
             return ret;
+        }
+
+        public async Task<bool> LoginUser(string email, string password)
+        {
+            //Achando usuário por email
+            var user = await _userManager.FindByEmailAsync(email);
+
+            if(user != null)
+            {
+                //Verificando se a senha é correta
+                if(await _userManager.CheckPasswordAsync(user, password))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public async Task<IdentityResult> RegisterUser(string name, string email, string password)
+        {
+            //Criação do objeto de usuário
+            IdentityUser user = new IdentityUser()
+            {
+                UserName = name,
+                Email = email
+            };
+
+            //Insere no DB
+            var response = await _userManager.CreateAsync(user, password);
+
+            return response;
+        }
+
+        //Gerar o token JWT com as configurações armazenadas
+        public string GenerateToken()
+        {
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            var key = Encoding.ASCII.GetBytes(_token.Secret);
+
+            var descriptor = new SecurityTokenDescriptor
+            {
+                Issuer = _token.Emitter,
+                Audience = _token.Address,
+                Expires = DateTime.UtcNow.AddHours(_token.ExpiresHours),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+            };
+
+            var token = tokenHandler.CreateToken(descriptor);
+
+            return tokenHandler.WriteToken(token);
         }
     }
 }
