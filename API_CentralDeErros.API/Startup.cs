@@ -49,7 +49,7 @@ namespace API_CentralDeErros.API
 
 
             //Identity
-            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<CentralContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<CentralContext>().AddDefaultTokenProviders();
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -58,6 +58,7 @@ namespace API_CentralDeErros.API
                 options.Password.RequireUppercase = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequireDigit = false;
             });
 
             //Token

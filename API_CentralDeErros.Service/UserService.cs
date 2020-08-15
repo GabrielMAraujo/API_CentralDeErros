@@ -95,5 +95,33 @@ namespace API_CentralDeErros.Service
 
             return tokenHandler.WriteToken(token);
         }
+
+        public async Task<string> GenerateResetPasswordToken(string email)
+        {
+            //Achar se email é correspondente no DB
+            IdentityUser user = await _userManager.FindByEmailAsync(email);
+
+            //Se não achar, retornar exceção para tratamento na controller
+            if(user == null)
+            {
+                throw new MissingMemberException();
+            }
+
+            //Gerando o token para resetar a senha
+            string resetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+            return resetToken;
+        }
+
+        //Reseta a senha do usuário
+        public async Task<bool> ResetPassword(string email, string newPassword, string token)
+        {
+            //Achar se email é correspondente no DB
+            IdentityUser user = await _userManager.FindByEmailAsync(email);
+
+            IdentityResult result = await _userManager.ResetPasswordAsync(user, token, newPassword);
+
+            return result.Succeeded;
+        }
     }
 }

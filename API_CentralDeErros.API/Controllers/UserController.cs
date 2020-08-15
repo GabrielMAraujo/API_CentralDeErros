@@ -5,6 +5,7 @@ using API_CentralDeErros.Model;
 using API_CentralDeErros.Model.Models.JSON;
 using API_CentralDeErros.Service.Interfaces;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace API_CentralDeErros.API.Controllers
 {
@@ -13,10 +14,12 @@ namespace API_CentralDeErros.API.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _service;
+        private readonly ILogger _logger;
 
-        public UserController(IUserService service)
+        public UserController(IUserService service, ILogger<UserController> logger)
         {
             _service = service;
+            _logger = logger;
         }
 
         [HttpPost("login")]
@@ -76,5 +79,57 @@ namespace API_CentralDeErros.API.Controllers
                 return StatusCode(500, response.Errors);
             }
         }
+
+        [HttpPost("forgotpassword")]
+        public async Task<ActionResult<string>> ForgotPassword([FromBody] UserResetJSON user)
+        {
+            string token = "";
+
+            try
+            {
+                 token = await _service.GenerateResetPasswordToken(user.Email);
+            }
+
+            catch(Exception e)
+            {
+                if(e.GetType().Name == "MissingMemberException")
+                {
+                    return StatusCode(401);
+                }
+                else
+                {
+                    _logger.LogError("Erro na geração do token: " + e);
+                    return StatusCode(500);
+                }
+            }
+
+            return Ok(token);
+        }
+
+        [HttpPost("resetpassword")]
+        public async Task<ActionResult> ResetPassword([FromBody] NewPasswordJSON json)
+        {
+            bool success = false;
+
+            try
+            {
+                success = await _service.ResetPassword(json.Email, json.NewPassword, json.Token);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError("Erro ao redefinir senha do usuário: " + e);
+                return StatusCode(500, e);
+            }
+
+            if (success)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return StatusCode(500, "Erro do servidor");
+            }
+        }
+
     }
 }

@@ -13,6 +13,8 @@ namespace API_CentralDeErros.Service.Interfaces
         //Métodos usando Identity
         public Task<bool> LoginUser(string email, string password);
         public Task<IdentityResult> RegisterUser(string name, string email, string password);
+        public Task<string> GenerateResetPasswordToken(string email);
+        public Task<bool> ResetPassword(string email, string newPassword, string token);
         //JWT
         public string GenerateToken();
     }
