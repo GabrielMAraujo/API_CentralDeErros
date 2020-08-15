@@ -1,12 +1,13 @@
 ﻿using API_CentralDeErros.Model.Models.JSON;
 using API_CentralDeErros.Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
 using System;
 
 namespace API_CentralDeErros.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AlertController : ControllerBase
