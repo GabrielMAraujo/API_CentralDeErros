@@ -7,5 +7,6 @@ namespace API_CentralDeErros.Service
     {
         IList<AlertDTO> GetAll();
         IList<AlertDTO> SearchAlerts(int environment, int searchBy, string text);
+        AlertDTO AddAlert(int userId, string level, string title, string description, string origin, int environment, string token);
     }
 }

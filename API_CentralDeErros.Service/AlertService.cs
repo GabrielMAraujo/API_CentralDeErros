@@ -5,7 +5,6 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace API_CentralDeErros.Service
 {
@@ -22,7 +21,7 @@ namespace API_CentralDeErros.Service
 
         public enum EEnvironment
         {
-            DEV = 1, HOMOLOGACAO = 2, PRODUCAO = 3
+            DEV = 1, HOMOLOGACAO = 2, PRODUÇÃO = 3
         }
 
         public enum ESearchBy
@@ -36,7 +35,7 @@ namespace API_CentralDeErros.Service
             string prop = Enum.GetName(typeof(ESearchBy), searchBy);
 
             var alerts = _context.Alerts
-                .Where(item => item.Type.ToUpper() == env)
+                .Where(item => item.Type == env)
                 .ToList();
 
             if (prop != null && text != null)
@@ -57,6 +56,19 @@ namespace API_CentralDeErros.Service
                 .ToList();
 
             return _mapper.Map<IList<AlertDTO>>(alerts);
+        }
+
+        public AlertDTO AddAlert(int userId, string level, string title, string description, string origin, int environment, string token)
+        {
+            string env = Enum.GetName(typeof(EEnvironment), environment);
+            DateTime date = DateTime.Now;
+
+            Alert alert = new Alert(userId, level, title, description, origin, env, token, date);
+
+            var newAlert = _context.Add(alert).Entity;
+            _context.SaveChanges();
+
+            return _mapper.Map<AlertDTO>(newAlert);
         }
     }
 }
