@@ -5,6 +5,18 @@ namespace API_CentralDeErros.Model
 {
     public class Alert
     {
+        public Alert(int userId, string level, string title, string description, string origin, string type, string token, DateTime date)
+        {
+            UserId = userId;
+            Level = level;
+            Title = title;
+            Description = description;
+            Origin = origin;
+            Type = type;
+            Date = date;
+            Token = token;
+        }
+
         [Required]
         public int Id { get; set; }
         [Required, MaxLength(7)]

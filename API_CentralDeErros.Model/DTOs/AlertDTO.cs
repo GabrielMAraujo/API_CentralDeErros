@@ -20,6 +20,8 @@ namespace API_CentralDeErros.Model.DTOs
         [Required]
         public string Type { get; set; }
         [Required]
+        public string Token { get; set; }
+        [Required]
         public int NumEvents { get; set; }
         [Required]
         public bool Archived { get; set; }

@@ -5,7 +5,6 @@ using AutoMapper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace API_CentralDeErros.Service
 {
@@ -20,16 +19,29 @@ namespace API_CentralDeErros.Service
             _mapper = mapper;
         }
 
-        public IList<AlertDTO> SearchAlerts(string environment, string searchBy, string text)
+        public enum EEnvironment
         {
+            DEV = 1, HOMOLOGACAO = 2, PRODUÇÃO = 3
+        }
+
+        public enum ESearchBy
+        {
+            Level = 1, Description = 2, Origin = 3
+        }
+
+        public IList<AlertDTO> SearchAlerts(int environment, int searchBy, string text)
+        {
+            string env = Enum.GetName(typeof(EEnvironment), environment);
+            string prop = Enum.GetName(typeof(ESearchBy), searchBy);
+
             var alerts = _context.Alerts
-                .Where(item => item.Type.ToUpper() == environment)
+                .Where(item => item.Type == env)
                 .ToList();
 
-            if(searchBy!=null)
+            if (prop != null && text != null)
                 for (int i = alerts.Count - 1; i >= 0; i--)
                 {
-                    var value = alerts[i].GetType().GetProperty(searchBy).GetValue(alerts[i], null);
+                    var value = alerts[i].GetType().GetProperty(prop).GetValue(alerts[i], null);
                     if (value.ToString().Contains(text) == false)
                         alerts.RemoveAt(i);
                 }
@@ -44,6 +56,19 @@ namespace API_CentralDeErros.Service
                 .ToList();
 
             return _mapper.Map<IList<AlertDTO>>(alerts);
+        }
+
+        public AlertDTO AddAlert(int userId, string level, string title, string description, string origin, int environment, string token)
+        {
+            string env = Enum.GetName(typeof(EEnvironment), environment);
+            DateTime date = DateTime.Now;
+
+            Alert alert = new Alert(userId, level, title, description, origin, env, token, date);
+
+            var newAlert = _context.Add(alert).Entity;
+            _context.SaveChanges();
+
+            return _mapper.Map<AlertDTO>(newAlert);
         }
     }
 }
