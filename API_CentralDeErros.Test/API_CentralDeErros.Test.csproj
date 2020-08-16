@@ -1,8 +1,25 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
-    <OutputType>Library</OutputType>
-  </PropertyGroup>
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <OutputType>Library</OutputType>
+    </PropertyGroup>
 
+    <ItemGroup>
+
+		<PackageReference Include="JUnitTestLogger" Version="1.1.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.6" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
+		<PackageReference Include="xunit" Version="2.4.0" />
+		<PackageReference Include="xunit.runner.visualstudio" Version="2.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+         <ProjectReference Include="..\API_CentralDeErros.API\API_CentralDeErros.API.csproj" />
+         <ProjectReference Include="..\API_CentralDeErros.Infra\API_CentralDeErros.Infra.csproj" />
+         <ProjectReference Include="..\API_CentralDeErros.Model\API_CentralDeErros.Model.csproj" />
+         <ProjectReference Include="..\API_CentralDeErros.Service\API_CentralDeErros.Service.csproj" />
+    </ItemGroup>
+	
 </Project>

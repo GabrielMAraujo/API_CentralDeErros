@@ -19,10 +19,17 @@ namespace API_CentralDeErros.Infra
             Configuration = configuration;
         }
 
+        // Construtor para teste com in-memory data
+        public CentralContext(DbContextOptions<CentralContext> options)
+            : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //Configurando o acesso ao servidor
-            optionsBuilder.UseSqlServer($"Server={Configuration["env:DB_SERVER_ADDRESS"]};" +
+            if (!optionsBuilder.IsConfigured)
+                optionsBuilder.UseSqlServer($"Server={Configuration["env:DB_SERVER_ADDRESS"]};" +
                 $"Database={Configuration["env:DB_SERVER_DATABASE_NAME"]};" +
                 $"User Id={Configuration["env:DB_USER_ID"]};" +
                 $"Password={Configuration["env:DB_PASSWORD"]};",
