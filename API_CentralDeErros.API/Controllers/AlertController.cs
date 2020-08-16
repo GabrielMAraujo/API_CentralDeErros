@@ -22,9 +22,9 @@ namespace API_CentralDeErros.API.Controllers
         // Retorna todas os alertas não arquivados
         // api/alert
         [HttpGet]
-        public ActionResult GetAll()
+        public ActionResult GetAll([FromQuery(Name = "archived")] Boolean archived)
         {
-            return Ok(_service.GetAll());
+            return Ok(_service.GetAll(archived));
         }
 
         // Adiciona novo alerta
@@ -34,7 +34,15 @@ namespace API_CentralDeErros.API.Controllers
         {
             var accessToken = Request.Headers[HeaderNames.Authorization];
 
-            return Ok(_service.AddAlert(alert.UserId, alert.Level, alert.Title, alert.Description, alert.Origin, alert.EnvironmentId, accessToken));
+            return Ok(_service.AddAlert(
+                alert.UserId, 
+                alert.Level, 
+                alert.Title, 
+                alert.Description, 
+                alert.Origin, 
+                alert.EnvironmentId, 
+                accessToken)
+            );
         }
 
         // Buscar alertas filtrando por ambiente e de acordo com um campo do alerta de busca

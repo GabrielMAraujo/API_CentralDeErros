@@ -31,17 +31,10 @@ namespace API_CentralDeErros.Test
                 .Options;
             DataFileNames.Add(typeof(Alert), $"FakeData{Path.DirectorySeparatorChar}alert.json");
             DataFileNames.Add(typeof(AlertDTO), $"FakeData{Path.DirectorySeparatorChar}alert.json");
-            //DataFileNames.Add(typeof(Level), $"FakeData{Path.DirectorySeparatorChar}level.json");
-            //DataFileNames.Add(typeof(LevelDTO), $"FakeData{Path.DirectorySeparatorChar}level.json");
-            //DataFileNames.Add(typeof(ErrorOccurrence), $"FakeData{Path.DirectorySeparatorChar}errorOcurrence.json");
-            //DataFileNames.Add(typeof(ErrorOccurrenceDTO), $"FakeData{Path.DirectorySeparatorChar}errorOcurrence.json");
 
             var configuration = new MapperConfiguration(cfg =>
             {
                 cfg.CreateMap<Alert, AlertDTO>().ReverseMap();
-                //cfg.CreateMap<ErrorOccurrence, ErrorOccurrenceDTO>().ReverseMap();
-                //cfg.CreateMap<ErrorOccurrence, ErrorDetailsDTO>().ReverseMap();
-                //cfg.CreateMap<Level, LevelDTO>().ReverseMap();
 
             });
 

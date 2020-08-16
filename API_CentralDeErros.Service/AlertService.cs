@@ -21,7 +21,7 @@ namespace API_CentralDeErros.Service
 
         public enum EEnvironment
         {
-            DEV = 1, HOMOLOGACAO = 2, PRODUÇÃO = 3
+            DESENVOLVIMENTO = 1, HOMOLOGAÇÃO = 2, PRODUÇÃO = 3
         }
 
         public enum ESearchBy
@@ -49,10 +49,10 @@ namespace API_CentralDeErros.Service
             return _mapper.Map<IList<AlertDTO>>(alerts);
         }
 
-        public IList<AlertDTO> GetAll()
+        public IList<AlertDTO> GetAll(Boolean archived)
         {
             var alerts = _context.Alerts
-                .Where(item => item.Archived == false)
+                .Where(item => item.Archived == archived)
                 .ToList();
 
             return _mapper.Map<IList<AlertDTO>>(alerts);
