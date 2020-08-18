@@ -14,15 +14,11 @@ namespace API_CentralDeErros.Infra
 
         private readonly IConfiguration Configuration;
 
-        public CentralContext(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
-
         // Construtor para teste com in-memory data
-        public CentralContext(DbContextOptions<CentralContext> options)
+        public CentralContext(DbContextOptions<CentralContext> options, IConfiguration configuration)
             : base(options)
         {
+            Configuration = configuration;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
