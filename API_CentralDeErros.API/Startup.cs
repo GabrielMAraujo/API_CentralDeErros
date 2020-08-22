@@ -93,6 +93,14 @@ namespace API_CentralDeErros.API
             services.AddSwaggerGen(x => {
                 x.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "API Central de Erros", Version = "v1" });
 
+                x.AddSecurityDefinition("Bearer",
+                    new OpenApiSecurityScheme
+                    {
+                        In = ParameterLocation.Header,
+                        Name = "Authorization",
+                        Type = SecuritySchemeType.ApiKey,
+                        Scheme = "Bearer"
+                    });
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 x.IncludeXmlComments(xmlPath);

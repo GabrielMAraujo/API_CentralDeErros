@@ -7,7 +7,7 @@ using System;
 
 namespace API_CentralDeErros.API.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AlertController : ControllerBase
