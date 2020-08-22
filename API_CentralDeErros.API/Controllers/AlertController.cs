@@ -7,7 +7,7 @@ using System;
 
 namespace API_CentralDeErros.API.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AlertController : ControllerBase
@@ -20,7 +20,7 @@ namespace API_CentralDeErros.API.Controllers
         }
 
         /// <summary>
-        /// Retorna todas os alertas não arquivados.
+        /// Retorna todas os alertas não arquivados ou arquivados.
         /// </summary>
         // api/alert
         [HttpGet]
@@ -39,12 +39,12 @@ namespace API_CentralDeErros.API.Controllers
             var accessToken = Request.Headers[HeaderNames.Authorization];
 
             return Ok(_service.AddAlert(
-                alert.UserId, 
-                alert.Level, 
-                alert.Title, 
-                alert.Description, 
-                alert.Origin, 
-                alert.EnvironmentId, 
+                alert.UserId,
+                alert.Level,
+                alert.Title,
+                alert.Description,
+                alert.Origin,
+                alert.EnvironmentId,
                 accessToken)
             );
         }
@@ -52,6 +52,12 @@ namespace API_CentralDeErros.API.Controllers
         /// <summary>
         /// Buscar alertas filtrando por ambiente e de acordo com um campo do alerta de busca.
         /// </summary>
+        /// <param name="environment">
+        /// 0 = Todos, 1 = DESENVOLVIMENTO, 2 = HOMOLOGAÇÃO, 3 = PRODUÇÃO
+        /// </param>
+        /// <param name="searchBy">
+        /// 0 = Todos os campos, 1 = Level, 2 = Descrição, 3 = Origem
+        /// </param>
         // api/alert/{ambiente}/{campo}?text=texto que será pesquisado
         [HttpGet("search/{environment?}/{searchBy?}")]
         public ActionResult Get(int environment, int searchBy, [FromQuery(Name = "text")] string text)

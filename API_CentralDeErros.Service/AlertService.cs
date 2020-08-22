@@ -34,11 +34,18 @@ namespace API_CentralDeErros.Service
             string env = Enum.GetName(typeof(EEnvironment), environment);
             string prop = Enum.GetName(typeof(ESearchBy), searchBy);
 
-            var alerts = _context.Alerts
-                .Where(item => item.Type == env)
-                .ToList();
+            var alerts = _context.Alerts.ToList();
 
-            if (prop != null && text != null)
+            if (environment != 0)
+                alerts = _context.Alerts
+                    .Where(item => item.Type == env)
+                    .ToList();
+
+            if (searchBy == 0 && text != null)
+                alerts = alerts
+                    .Where(a => a.Description.Contains(text) || a.Level.Contains(text) || a.Origin.Contains(text))
+                    .ToList();
+            else if (prop != null && text != null)
                 for (int i = alerts.Count - 1; i >= 0; i--)
                 {
                     var value = alerts[i].GetType().GetProperty(prop).GetValue(alerts[i], null);

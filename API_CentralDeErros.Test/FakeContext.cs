@@ -43,7 +43,7 @@ namespace API_CentralDeErros.Test
 
         public void FillWith<T>() where T : class
         {
-            using (var context = new CentralContext(FakeOptions))
+            using (var context = new CentralContext(FakeOptions, null))
             {
                 if (context.Set<T>().Count() == 0)
                 {
