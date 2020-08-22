@@ -21,6 +21,9 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using System.Reflection;
+using System.IO;
 
 namespace API_CentralDeErros.API
 {
@@ -85,6 +88,15 @@ namespace API_CentralDeErros.API
                     ValidIssuer = token.Emitter
                 };
             });
+
+            //Swagger
+            services.AddSwaggerGen(x => {
+                x.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "API Central de Erros", Version = "v1" });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                x.IncludeXmlComments(xmlPath);
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -94,6 +106,12 @@ namespace API_CentralDeErros.API
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(x =>
+            {
+                x.SwaggerEndpoint(url: "v1/swagger.json", name: "API Central de Erros");
+            });
 
             app.UseHttpsRedirection();
 

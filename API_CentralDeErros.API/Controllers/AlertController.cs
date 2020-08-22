@@ -19,7 +19,9 @@ namespace API_CentralDeErros.API.Controllers
             _service = service;
         }
 
-        // Retorna todas os alertas não arquivados
+        /// <summary>
+        /// Retorna todas os alertas não arquivados.
+        /// </summary>
         // api/alert
         [HttpGet]
         public ActionResult GetAll([FromQuery(Name = "archived")] Boolean archived)
@@ -27,7 +29,9 @@ namespace API_CentralDeErros.API.Controllers
             return Ok(_service.GetAll(archived));
         }
 
-        // Adiciona novo alerta
+        /// <summary>
+        /// Adiciona novo alerta.
+        /// </summary>
         // api/alert
         [HttpPost]
         public ActionResult Add([FromBody] AlertAddJSON alert)
@@ -45,7 +49,9 @@ namespace API_CentralDeErros.API.Controllers
             );
         }
 
-        // Buscar alertas filtrando por ambiente e de acordo com um campo do alerta de busca
+        /// <summary>
+        /// Buscar alertas filtrando por ambiente e de acordo com um campo do alerta de busca.
+        /// </summary>
         // api/alert/{ambiente}/{campo}?text=texto que será pesquisado
         [HttpGet("search/{environment?}/{searchBy?}")]
         public ActionResult Get(int environment, int searchBy, [FromQuery(Name = "text")] string text)

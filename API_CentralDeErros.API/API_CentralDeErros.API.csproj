@@ -5,6 +5,10 @@
     <AssemblyName>API_CentralDeErros</AssemblyName>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'API_CentralDeErros' ">
     <StartAction>Project</StartAction>
@@ -26,6 +30,7 @@
     <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.6" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\API_CentralDeErros.Model\API_CentralDeErros.Model.csproj">

@@ -22,6 +22,9 @@ namespace API_CentralDeErros.API.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Faz o login do usuário com email e senha.
+        /// </summary>
         [HttpPost("login")]
         public async Task<ActionResult<string>> Login([FromBody] UserLoginJSON user)
         {
@@ -52,6 +55,9 @@ namespace API_CentralDeErros.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Registra o usuário com nome, email e senha.
+        /// </summary>
         [HttpPost("register")]
         public async Task<ActionResult<string>> Register([FromBody] UserRegisterJSON user)
         {
@@ -80,6 +86,9 @@ namespace API_CentralDeErros.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Gera um token para redefinir a senha de um usuário a partir de seu email.
+        /// </summary>
         [HttpPost("forgotpassword")]
         public async Task<ActionResult<string>> ForgotPassword([FromBody] UserResetJSON user)
         {
@@ -106,6 +115,9 @@ namespace API_CentralDeErros.API.Controllers
             return Ok(token);
         }
 
+        /// <summary>
+        /// Redefine a senha de um usuário a partir do token recebido.
+        /// </summary>
         [HttpPost("resetpassword")]
         public async Task<ActionResult> ResetPassword([FromBody] NewPasswordJSON json)
         {
