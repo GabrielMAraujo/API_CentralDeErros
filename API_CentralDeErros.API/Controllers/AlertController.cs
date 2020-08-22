@@ -1,4 +1,5 @@
-﻿using API_CentralDeErros.Model.Models.JSON;
+﻿using API_CentralDeErros.Model;
+using API_CentralDeErros.Model.Models.JSON;
 using API_CentralDeErros.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -63,6 +64,51 @@ namespace API_CentralDeErros.API.Controllers
         public ActionResult Get(int environment, int searchBy, [FromQuery(Name = "text")] string text)
         {
             return Ok(_service.SearchAlerts(environment, searchBy, text));
+        }
+
+        [HttpGet("{id}")]
+        public ActionResult GetById(int id)
+        {
+            Alert alert = _service.GetAlertById(id);
+
+            if(alert != null)
+            {
+                return Ok(alert);
+            }
+            else
+            {
+                return StatusCode(404);
+            }
+        }
+
+        [HttpPatch("archive/{id}")]
+        public ActionResult Archive(int id)
+        {
+            Alert alert = _service.ArchiveAlert(id);
+
+            if (alert != null)
+            {
+                return Ok(alert);
+            }
+            else
+            {
+                return StatusCode(404, "O alerta com id " + id +  " não foi encontrado.");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public ActionResult Delete(int id)
+        {
+            bool success = _service.DeleteAlert(id);
+
+            if (success)
+            {
+                return NoContent();
+            }
+            else
+            {
+                return StatusCode(404, "O alerta com id " + id + " não foi encontrado.");
+            }
         }
     }
 }

@@ -24,6 +24,6 @@ namespace API_CentralDeErros.Model
         [MaxLength(50)]
         public string Token { get; set; }
 
-        public List<Alert> Alerts { get; set; }
+        //public List<Alert> Alerts { get; set; }
     }
 }

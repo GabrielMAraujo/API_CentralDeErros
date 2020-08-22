@@ -70,12 +70,54 @@ namespace API_CentralDeErros.Service
             string env = Enum.GetName(typeof(EEnvironment), environment);
             DateTime date = DateTime.Now;
 
-            Alert alert = new Alert(userId, level, title, description, origin, env, token, date);
+            //Extrair apenas token da string recebida
+            //"Bearer " = 7 chars
+            int count = 7;
+            string tokenInfo = token.Remove(0, count);
+
+            Alert alert = new Alert(userId, level, title, description, origin, env, tokenInfo, date);
 
             var newAlert = _context.Add(alert).Entity;
             _context.SaveChanges();
 
             return _mapper.Map<AlertDTO>(newAlert);
+        }
+
+        public Alert GetAlertById(int id)
+        {
+            return _context.Alerts.Find(id);
+        }
+
+        public Alert ArchiveAlert(int id)
+        {
+            Alert alert = _context.Alerts.Find(id);
+
+            if (alert != null)
+            {
+                alert.Archived = true;
+            }
+
+            _context.SaveChanges();
+
+            return alert;
+        }
+
+        public bool DeleteAlert(int id)
+        {
+            Alert alert = _context.Alerts.Find(id);
+
+            if (alert != null) {
+                var result = _context.Alerts.Remove(alert);
+
+                if(result != null)
+                {
+                    _context.SaveChanges();
+
+                    return true;
+                }
+            }
+
+            return false;
         }
     }
 }

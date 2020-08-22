@@ -3,10 +3,32 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace API_CentralDeErros.API.Migrations
 {
-    public partial class Identity : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Alerts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Level = table.Column<string>(maxLength: 7, nullable: false),
+                    Title = table.Column<string>(maxLength: 150, nullable: false),
+                    Description = table.Column<string>(maxLength: 300, nullable: false),
+                    Origin = table.Column<string>(maxLength: 15, nullable: false),
+                    Date = table.Column<DateTime>(nullable: false),
+                    Type = table.Column<string>(maxLength: 15, nullable: false),
+                    NumEvents = table.Column<int>(nullable: false),
+                    Archived = table.Column<bool>(nullable: false),
+                    Token = table.Column<string>(maxLength: 300, nullable: false),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Alerts", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
@@ -44,6 +66,22 @@ namespace API_CentralDeErros.API.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(maxLength: 30, nullable: false),
+                    UserName = table.Column<string>(maxLength: 50, nullable: false),
+                    Password = table.Column<string>(maxLength: 50, nullable: false),
+                    Token = table.Column<string>(maxLength: 50, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,6 +233,9 @@ namespace API_CentralDeErros.API.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "Alerts");
+
+            migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
             migrationBuilder.DropTable(
@@ -208,6 +249,9 @@ namespace API_CentralDeErros.API.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

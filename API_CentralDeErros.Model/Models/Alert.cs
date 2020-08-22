@@ -29,18 +29,18 @@ namespace API_CentralDeErros.Model
         public string Origin { get; set; }
         [Required]
         public DateTime Date { get; set; }
-        [Required, MaxLength(11)]
+        [Required, MaxLength(15)]
         public string Type { get; set; }
         [Required]
         public int NumEvents { get; set; }
         [Required]
         public bool Archived { get; set; }
-        [Required, MaxLength(50)]
+        [Required, MaxLength(300)]
         public string Token { get; set; }
 
         [Required]
         public int UserId { get; set; }
 
-        public User User { get; set; }
+        //public User User { get; set; }
     }
 }
