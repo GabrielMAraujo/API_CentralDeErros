@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <AssemblyName>API_CentralDeErros</AssemblyName>
+    <DockerComposeProjectPath>../docker-compose.dcproj</DockerComposeProjectPath>
+    <UserSecretsId>aaa6a91e-fc3c-4ce1-a94d-1dbcced63467</UserSecretsId>
   </PropertyGroup>
 
   <PropertyGroup>

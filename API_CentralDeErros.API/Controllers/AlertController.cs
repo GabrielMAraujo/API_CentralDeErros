@@ -66,6 +66,9 @@ namespace API_CentralDeErros.API.Controllers
             return Ok(_service.SearchAlerts(environment, searchBy, text));
         }
 
+        /// <summary>
+        /// Busca um alerta pelo seu ID.
+        /// </summary>
         [HttpGet("{id}")]
         public ActionResult GetById(int id)
         {
@@ -81,6 +84,9 @@ namespace API_CentralDeErros.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Arquiva um alerta pelo seu ID.
+        /// </summary>
         [HttpPatch("archive/{id}")]
         public ActionResult Archive(int id)
         {
@@ -96,6 +102,9 @@ namespace API_CentralDeErros.API.Controllers
             }
         }
 
+        /// <summary>
+        /// Remove um alerta pelo seu ID.
+        /// </summary>
         [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {

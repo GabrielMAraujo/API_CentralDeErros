@@ -24,6 +24,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using System.Reflection;
 using System.IO;
+using Microsoft.EntityFrameworkCore;
 
 namespace API_CentralDeErros.API
 {
@@ -108,12 +109,14 @@ namespace API_CentralDeErros.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CentralContext context)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            context.Database.Migrate();
 
             app.UseSwagger();
             app.UseSwaggerUI(x =>
